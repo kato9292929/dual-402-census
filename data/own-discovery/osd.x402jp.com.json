@@ -1,0 +1,189 @@
+{
+  "version": 2,
+  "name": "Onchain Stock Data",
+  "description": "Claude-run equity research for AI agents: weekly US/JP portfolios (holdings + verifiable catalysts) and dated-catalyst scoring. Every paid resource settles per call in USDC on Solana (exact, gas sponsored by the facilitator) — $0.01 for the /api/alpha/* surface, 0.001 USDC for the per-company /api/catalyst/{ticker} and /api/edinet/{code} lookups. A free, unsigned surface (the MCP server and three JSON endpoints) is listed under `free_endpoints` / `mcp`.",
+  "operator": "x402 Inc.",
+  "region": "APAC",
+  "base_url": "https://osd.x402jp.com",
+  "endpoints": [
+    {
+      "path": "/api/alpha/portfolio/current",
+      "method": "GET",
+      "description": "Claude US Portfolio - current weekly 10-name selection (ticker, weight, thesis).",
+      "accepts": [
+        {
+          "scheme": "exact",
+          "network": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
+          "amount": "10000",
+          "asset": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "payTo": "4s8XQC2WzRfgH8Xiep7ybnCW11VKRCMwxQF6jknx3VPf",
+          "resource": "https://osd.x402jp.com/api/alpha/portfolio/current"
+        }
+      ]
+    },
+    {
+      "path": "/api/alpha/portfolio/scorecard",
+      "method": "GET",
+      "description": "Claude US Portfolio scorecard - catalyst hit-rate, recent verdicts, and `coverage` (whether every selected week reached the scorer). No returns / benchmark data. `as_of` is when the answer was computed, NOT a freshness signal - read `last_verdict_at` and `coverage.unregistered` for that.",
+      "accepts": [
+        {
+          "scheme": "exact",
+          "network": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
+          "amount": "10000",
+          "asset": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "payTo": "4s8XQC2WzRfgH8Xiep7ybnCW11VKRCMwxQF6jknx3VPf",
+          "resource": "https://osd.x402jp.com/api/alpha/portfolio/scorecard"
+        }
+      ]
+    },
+    {
+      "path": "/api/alpha/jp/portfolio/current",
+      "method": "GET",
+      "description": "Claude JP Portfolio - current weekly 10-name Japan-equity selection.",
+      "accepts": [
+        {
+          "scheme": "exact",
+          "network": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
+          "amount": "10000",
+          "asset": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "payTo": "4s8XQC2WzRfgH8Xiep7ybnCW11VKRCMwxQF6jknx3VPf",
+          "resource": "https://osd.x402jp.com/api/alpha/jp/portfolio/current"
+        }
+      ]
+    },
+    {
+      "path": "/api/alpha/jp/scorecard",
+      "method": "GET",
+      "description": "Claude JP Portfolio scorecard - catalyst hit-rate and `coverage` (whether every selected week reached the scorer). No benchmark index. `as_of` is when the answer was computed, NOT a freshness signal - read `last_verdict_at` and `coverage.unregistered` for that.",
+      "accepts": [
+        {
+          "scheme": "exact",
+          "network": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
+          "amount": "10000",
+          "asset": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "payTo": "4s8XQC2WzRfgH8Xiep7ybnCW11VKRCMwxQF6jknx3VPf",
+          "resource": "https://osd.x402jp.com/api/alpha/jp/scorecard"
+        }
+      ]
+    },
+    {
+      "path": "/api/alpha/jp/catalysts",
+      "method": "GET",
+      "description": "Claude JP dated catalysts.",
+      "accepts": [
+        {
+          "scheme": "exact",
+          "network": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
+          "amount": "10000",
+          "asset": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "payTo": "4s8XQC2WzRfgH8Xiep7ybnCW11VKRCMwxQF6jknx3VPf",
+          "resource": "https://osd.x402jp.com/api/alpha/jp/catalysts"
+        }
+      ]
+    },
+    {
+      "path": "/api/alpha/catalyst/submit",
+      "method": "POST",
+      "description": "Submit an external catalyst for Claude verdict scoring. Body: { ticker, catalyst_description, target_date, submitter_contact? }.",
+      "accepts": [
+        {
+          "scheme": "exact",
+          "network": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
+          "amount": "10000",
+          "asset": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "payTo": "4s8XQC2WzRfgH8Xiep7ybnCW11VKRCMwxQF6jknx3VPf",
+          "resource": "https://osd.x402jp.com/api/alpha/catalyst/submit"
+        }
+      ]
+    },
+    {
+      "path": "/api/alpha/catalyst/:catalyst_id/score",
+      "method": "GET",
+      "description": "Lookup the Claude verdict for a submitted external catalyst (pending|hit|partial|miss|na).",
+      "accepts": [
+        {
+          "scheme": "exact",
+          "network": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
+          "amount": "10000",
+          "asset": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "payTo": "4s8XQC2WzRfgH8Xiep7ybnCW11VKRCMwxQF6jknx3VPf",
+          "resource": "https://osd.x402jp.com/api/alpha/catalyst/:catalyst_id/score"
+        }
+      ]
+    },
+    {
+      "path": "/api/catalyst/:ticker",
+      "method": "GET",
+      "description": "Per-company catalyst (due date, success/fail condition, source) plus the latest disclosed financials where the research recorded them. Only researched companies are charged: one still awaiting research returns 200 free with researched:false, and an unknown ticker returns 404 — neither reaches the paywall. Settled per call in USDC on Solana.",
+      "accepts": [
+        {
+          "scheme": "exact",
+          "network": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
+          "amount": "1000",
+          "asset": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "payTo": "4s8XQC2WzRfgH8Xiep7ybnCW11VKRCMwxQF6jknx3VPf",
+          "resource": "https://osd.x402jp.com/api/catalyst/:ticker"
+        }
+      ]
+    },
+    {
+      "path": "/api/edinet/:code",
+      "method": "GET",
+      "description": "Latest EDINET disclosure metadata (filer, doc id/type, submit datetime) and the accounting period for a TSE ticker. Headline figures are not served (financials_available:false). Settled per call in USDC on Solana.",
+      "accepts": [
+        {
+          "scheme": "exact",
+          "network": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
+          "amount": "1000",
+          "asset": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "payTo": "4s8XQC2WzRfgH8Xiep7ybnCW11VKRCMwxQF6jknx3VPf",
+          "resource": "https://osd.x402jp.com/api/edinet/:code"
+        }
+      ]
+    }
+  ],
+  "free_endpoints": [
+    {
+      "path": "/api/alpha/catalysts/physical-ai",
+      "method": "GET",
+      "description": "Physical-AI dated-catalyst scoreboard: overall hit-rate, per-article breakdown, and every scorable condition with its current verdict.",
+      "url": "https://osd.x402jp.com/api/alpha/catalysts/physical-ai"
+    },
+    {
+      "path": "/api/catalyst",
+      "method": "GET",
+      "description": "Index of the companies covered by /api/catalyst/{ticker}: ticker, name, sector, and whether researched data exists. Free preview of the paid resource.",
+      "url": "https://osd.x402jp.com/api/catalyst"
+    },
+    {
+      "path": "/api/edinet",
+      "method": "GET",
+      "description": "Descriptor for /api/edinet/{code}: parameters, price, source attribution and what the paid response contains.",
+      "url": "https://osd.x402jp.com/api/edinet"
+    }
+  ],
+  "mcp": {
+    "url": "https://osd.x402jp.com/api/mcp",
+    "transport": "streamable-http",
+    "auth": "none",
+    "description": "Read-only MCP tools over the same committed research, free and unsigned.",
+    "tools": [
+      "portfolio_get",
+      "catalysts_list",
+      "scoreboard_get",
+      "signal_get"
+    ]
+  },
+  "testnet_endpoints": [
+    {
+      "path": "/api/testnet/signal",
+      "method": "GET",
+      "description": "Paid twin of the free MCP `signal_get` tool, for exercising the 402 -> sign -> 200 loop. TESTNET ONLY — settles in Base Sepolia USDC, not real funds.",
+      "network": "eip155:84532",
+      "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+      "payTo": "0xC67d94504696960bA0f2e7C3FeE703950734c00A",
+      "price": "$0.05",
+      "resource": "https://osd.x402jp.com/api/testnet/signal"
+    }
+  ]
+}

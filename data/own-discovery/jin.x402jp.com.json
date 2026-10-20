@@ -1,0 +1,48 @@
+{
+  "source": "japan-inflation-nowcast",
+  "note": "公的CPIとJIN店頭観測。店頭観測は非公的指数。予測は含まない。",
+  "x402": "native withX402 (v2). Payment challenge is served on each endpoint (402 with PAYMENT-REQUIRED header).",
+  "network": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
+  "asset": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+  "payTo": "4s8XQC2WzRfgH8Xiep7ybnCW11VKRCMwxQF6jknx3VPf",
+  "endpoints": [
+    {
+      "resource": "https://jin.x402jp.com/api/jin/series",
+      "price": "$0.01",
+      "free": false
+    },
+    {
+      "resource": "https://jin.x402jp.com/api/jin/movers",
+      "price": "$0.02",
+      "free": false
+    },
+    {
+      "resource": "https://jin.x402jp.com/api/jin/latest",
+      "price": null,
+      "free": true
+    },
+    {
+      "resource": "https://jin.x402jp.com/api/inflation/latest",
+      "price": null,
+      "free": true
+    },
+    {
+      "resource": "https://jin.x402jp.com/api/inflation/jp",
+      "price": null,
+      "configured_price": "$0.01",
+      "free": true
+    },
+    {
+      "resource": "https://jin.x402jp.com/api/inflation/kr",
+      "price": null,
+      "configured_price": "$0.01",
+      "free": true
+    },
+    {
+      "resource": "https://jin.x402jp.com/api/inflation/sg",
+      "price": null,
+      "configured_price": "$0.01",
+      "free": true
+    }
+  ]
+}

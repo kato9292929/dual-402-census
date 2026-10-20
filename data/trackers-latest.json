@@ -1,0 +1,42 @@
+{
+  "x402scan": {
+    "site": "x402scan",
+    "url": "https://www.x402scan.com/",
+    "fetched_at": "2026-10-20T05:53:39Z",
+    "period_label": "Past 30 Days",
+    "volume": "$1.23M",
+    "transactions": "3.03M",
+    "buyers": "36.05K",
+    "buyers_label": "Buyers",
+    "screenshot": "docs/screens/x402scan-20261020T055328Z.png",
+    "note": null
+  },
+  "mppscan": {
+    "site": "MPPscan",
+    "url": "https://www.mppscan.com/",
+    "scope": "All",
+    "fetched_at": "2026-10-20T05:53:53Z",
+    "period_label": "30d",
+    "volume": "$8.65K",
+    "transactions": "843K",
+    "buyers": "12.3K",
+    "buyers_label": "Agents",
+    "screenshot": "docs/screens/mppscan-30d-all-20261020T055328Z.png",
+    "note": null,
+    "servers": "322"
+  },
+  "mppscan_featured": {
+    "site": "MPPscan",
+    "url": "https://www.mppscan.com/",
+    "scope": "Featured",
+    "fetched_at": "2026-10-20T05:54:06Z",
+    "period_label": "30d",
+    "volume": "$8.65K",
+    "transactions": "843K",
+    "buyers": "12.3K",
+    "buyers_label": "Agents",
+    "screenshot": "docs/screens/mppscan-30d-featured-20261020T055328Z.png",
+    "note": null,
+    "servers": "322"
+  }
+}
