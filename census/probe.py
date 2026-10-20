@@ -84,10 +84,17 @@ def record(target, r, body, ms, method, fallback):
     }
 
 
-async def probe_one(client, sem, target):
+def _client():
+    # One client per host: nothing (pool slots, half-open CONNECT tunnels) can
+    # leak from one host's cancelled request into another host's measurement.
+    return httpx.AsyncClient(timeout=TIMEOUT, follow_redirects=True, max_redirects=5,
+                             verify=os.environ.get("SSL_CERT_FILE") or True)
+
+
+async def probe_one(sem, target):
     row = {k: target.get(k) for k in ("host", "url", "category", "own", "in_catalog", "rule")}
     method = (target.get("method") or "GET").upper()
-    async with sem:
+    async with sem, _client() as client:
         row["measured_at"] = now()
         try:
             r, body, ms = await asyncio.wait_for(_send(client, method, target["url"]), TIMEOUT)
@@ -109,18 +116,16 @@ async def probe_one(client, sem, target):
 
 async def probe_all(targets, out_path, progress_every=500):
     sem = asyncio.Semaphore(CONCURRENCY)
-    limits = httpx.Limits(max_connections=CONCURRENCY * 2, max_keepalive_connections=0)
-    verify = os.environ.get("SSL_CERT_FILE") or True
-    async with httpx.AsyncClient(timeout=TIMEOUT, follow_redirects=True, max_redirects=5,
-                                 limits=limits, verify=verify) as client:
-        tasks = [asyncio.create_task(probe_one(client, sem, t)) for t in targets]
-        n = 0
-        with open(out_path, "w") as f:
-            for fut in asyncio.as_completed(tasks):
-                row = await fut
-                f.write(json.dumps(row, ensure_ascii=False) + "\n")
-                n += 1
-                if progress_every and n % progress_every == 0:
-                    f.flush()
-                    print(f"{now()} {n}/{len(targets)}", flush=True)
+    tasks = [asyncio.create_task(probe_one(sem, t)) for t in targets]
+    n = 0
+    window = []
+    with open(out_path, "w") as f:
+        for fut in asyncio.as_completed(tasks):
+            row = await fut
+            f.write(json.dumps(row, ensure_ascii=False) + "\n")
+            n += 1
+            window = (window + [row["classification"] == P.ERROR])[-progress_every or 500:]
+            if progress_every and n % progress_every == 0:
+                f.flush()
+                print(f"{now()} {n}/{len(targets)} error_rate_last_{len(window)}={sum(window) / len(window):.2f}", flush=True)
     return n

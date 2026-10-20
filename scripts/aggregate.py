@@ -108,6 +108,10 @@ def main(arg=None):
     L.append(f"A7  402以外・エラーの内訳: 402以外 {by[P.NOT_402]:,} / エラー {by[P.ERROR]:,}")
     for k, v in sorted(nonpay.items(), key=lambda kv: (-kv[1], kv[0])):
         L.append(f"      {k}: {v:,}")
+    for lab, pred in (("HTTP 502", lambda r: r.get("status") == 502), ("エラー:dns", lambda r: r.get("error_kind") == "dns")):
+        suf = collections.Counter(".".join(r["host"].split(":")[0].split(".")[-2:]) for r in rows if pred(r))
+        if suf:
+            L.append(f"      （参考）{lab} の多いドメイン: " + " / ".join(f"{k} {v:,}" for k, v in suf.most_common(3)))
     L.append(f"A8  MPPチャレンジのmethod内訳（両対応+MPPのみ {len(dual) + len(mpp_only):,} ホスト、チャレンジ計 {sum(meth_ch.values()):,}）")
     for m in order:
         if meth_ch[m] or m in P.MPP_METHODS:
