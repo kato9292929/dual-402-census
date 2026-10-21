@@ -1,6 +1,15 @@
 {
-  "done": false,
+  "done": true,
   "census": "census-20261020T072707Z.jsonl",
-  "hosts": 334,
-  "due_at": "2026-10-21T07:55:55Z"
+  "file": "recheck-20261021T075829Z.jsonl",
+  "due_at": "2026-10-21T07:55:55Z",
+  "started_at": "2026-10-21T07:58:29Z",
+  "finished_at": "2026-10-21T07:59:15Z",
+  "total": 334,
+  "matched": 330,
+  "rate_pct": 98.8,
+  "transitions": {
+    "両対応→両対応": 330,
+    "両対応→x402のみ": 4
+  }
 }
